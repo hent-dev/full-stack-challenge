@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :lends
   resources :books
+  resources :users
   devise_for :users
 
   devise_scope :user do
