@@ -1,0 +1,14 @@
+<div class="max-w-3xl mx-auto px-4 sm:px-6 md:flex md:items-center md:justify-between md:space-x-5 lg:max-w-7xl lg:px-8">
+  <div class="flex items-center space-x-5">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-900">Edit User</h1>
+      <p class="text-sm font-medium text-gray-500"><%= @user.name %></p>
+
+    </div>
+  </div>
+  <div class="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
+    <%= link_to 'Back', user_path(@user), class: "inline-flex items-center justify-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500" %>
+  </div>
+</div>
+
+<%= render 'form', user: @user %>
