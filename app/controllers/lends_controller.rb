@@ -9,7 +9,6 @@ class LendsController < ApplicationController
   # GET /lends/1 or /lends/1.json
   def show
     @lend = Lend.find(params[:id])
-    @user = User.find(@lend.user_id)
   end
 
   # GET /lends/new
@@ -62,6 +61,7 @@ class LendsController < ApplicationController
 
   # DELETE /lends/1 or /lends/1.json
   def destroy
+    oi
     @lend.destroy
     respond_to do |format|
       format.html { redirect_to lends_url, notice: "Lend was successfully destroyed." }
