@@ -18,15 +18,15 @@ class LendsController < ApplicationController
 
   # GET /lends/1/edit
   def edit
-    @oldLend = Lend.find(params[:id])
+    @lend = Lend.find(params[:id])
   end
 
   # POST /lends or /lends.json
   def create
-
     user_email = lend_params[:user_email]
-    user = User.find_by(email: user_email)
-    @lend = Lend.new({book_id: params[:book_id], user_id: user})
+    user = User.find_by!(email: user_email)
+    book = lend_params[:book_id]
+    @lend = Lend.new({book_id: book, user_id: user.id})
 
     respond_to do |format|
       if @lend.save
@@ -41,15 +41,21 @@ class LendsController < ApplicationController
 
   # PATCH/PUT /lends/1 or /lends/1.json
   def update
-
     user_email = lend_params[:user_email]
-    @lend = Lend.Find(:id)
-    @user = User.find_by(email: user_email)
-    @lend.user_id = @user
-    @lend.book_id = lend_params[:book_id]
+    lend = Lend.find(params[:id])
+    user = User.find_by!(email: user_email)
+    lend.user_id = user.id
+    lend.book_id = lend_params[:book_id]
 
+    if lend_params[:returned_bool] == "Yes"
+      lend.devolution = Time.new
+    else
+      lend.devolution = nil
+    end
+
+    upd = {:user_id => user.id, :devolution => lend.devolution, :book_id => lend.book_id}
     respond_to do |format|
-      if @lend.update(@lend)
+      if @lend.update(upd)
         format.html { redirect_to @lend, notice: "Lend was successfully updated." }
         format.json { render :show, status: :ok, location: @lend }
       else
@@ -61,7 +67,6 @@ class LendsController < ApplicationController
 
   # DELETE /lends/1 or /lends/1.json
   def destroy
-    oi
     @lend.destroy
     respond_to do |format|
       format.html { redirect_to lends_url, notice: "Lend was successfully destroyed." }
@@ -77,6 +82,6 @@ class LendsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lend_params
-      params.fetch(:lend, {}).permit(:book_id, :user_email)
+      params.fetch(:lend, {}).permit(:book_id, :user_email, :returned_bool)
     end
 end

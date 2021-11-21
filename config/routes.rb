@@ -2,6 +2,8 @@
 Rails.application.routes.draw do
   root to: 'books#index'
 
+  post "users/", to: 'users#create'
+
   resources :lends
   resources :books
   devise_for :users

@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ edit update show ]
+  before_action :set_user, only: %i[ edit update ]
 
   def index
     @users = User.all
   end
 
   def show
+    @user = User.find(params[:id])
   end
 
   def new
@@ -56,6 +57,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.fetch(:user, {}).permit(:user_id, :name, :password, :email)
+      params.fetch(:user, {}).permit(:user_id, :name, :password, :email, :id)
     end
 end
