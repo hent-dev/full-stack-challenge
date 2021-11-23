@@ -1,7 +1,9 @@
 class AddDetailsToLends < ActiveRecord::Migration[6.1]
   def change
-    add_column :lends, :loan, :datetime
-    add_column :lends, :devolution, :datetime
-    add_reference :lends, :user, foreign_key: true
+    change_table(:lends, bulk: true) do |t|
+      t.datetime :loan
+      t.datetime :devolution
+      t.belongs_to :user, foreign_key: true
+    end
   end
 end

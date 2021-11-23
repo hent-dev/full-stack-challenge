@@ -23,10 +23,8 @@ class LendsController < ApplicationController
 
   # POST /lends or /lends.json
   def create
-    user_email = lend_params[:user_email]
-    user = User.find_by!(email: user_email)
-    book = lend_params[:book_id]
-    @lend = Lend.new({book_id: book, user_id: user.id})
+    user = User.find_by!(email: lend_params[:user_email])
+    @lend = Lend.new(book_id: lend_params[:book_id], user_id: user.id)
 
     respond_to do |format|
       if @lend.save
@@ -41,21 +39,24 @@ class LendsController < ApplicationController
 
   # PATCH/PUT /lends/1 or /lends/1.json
   def update
-    user_email = lend_params[:user_email]
-    lend = Lend.find(params[:id])
-    user = User.find_by!(email: user_email)
-    lend.user_id = user.id
-    lend.book_id = lend_params[:book_id]
 
-    if lend_params[:returned_bool] == "Yes"
-      lend.devolution = Time.new
+    if User.find_by(email: lend_params[:user_email]).nil?
+      error = true
+      @lend.errors[:base] << "Invalid email"
     else
-      lend.devolution = nil
+      user = User.find_by!(email: lend_params[:user_email])
+      @lend.user_id = user.id
+      @lend.book_id = lend_params[:book_id]
+
+      if lend_params[:returned_bool] == "Yes"
+        @lend.devolution = Time.new
+      else
+        @lend.devolution = nil
+      end
     end
 
-    upd = {:user_id => user.id, :devolution => lend.devolution, :book_id => lend.book_id}
     respond_to do |format|
-      if @lend.update(upd)
+      if !error && @lend.save
         format.html { redirect_to @lend, notice: "Lend was successfully updated." }
         format.json { render :show, status: :ok, location: @lend }
       else

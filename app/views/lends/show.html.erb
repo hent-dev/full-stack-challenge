@@ -50,13 +50,13 @@
               <dt class="text-sm font-medium text-gray-500">
                 Return date
               </dt>
-              <% if @lend.devolution != nil %>
+              <% if @lend.devolution.nil? %>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <%= I18n.l @lend.devolution %>
+                <%= "-----" %>
                 </dd>
               <% else %>
                 <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                <%= "-----" %>
+                <%= I18n.l @lend.devolution %>
                 </dd>
               <% end %>
             </div>

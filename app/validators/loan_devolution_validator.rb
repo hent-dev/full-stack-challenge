@@ -1,4 +1,4 @@
-class TopValidator < ActiveModel::Validator
+class LoanDevolutionValidator < ActiveModel::Validator
     def validate(record)
         if record.devolution != nil && record.devolution < record.created_at
             puts "devolution: #{record.devolution}"
