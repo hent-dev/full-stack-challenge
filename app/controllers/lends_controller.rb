@@ -23,11 +23,21 @@ class LendsController < ApplicationController
 
   # POST /lends or /lends.json
   def create
-    user = User.find_by!(email: lend_params[:user_email])
-    @lend = Lend.new(book_id: lend_params[:book_id], user_id: user.id)
+
+    @lend = Lend.new
+
+    if User.find_by(email: lend_params[:user_email]).nil?
+      error = true
+      @lend.errors[:base] << "Invalid email"
+    else
+      error = false
+      user = User.find_by!(email: lend_params[:user_email])
+      @lend.book_id = lend_params[:book_id]
+      @lend.user_id = user.id
+    end
 
     respond_to do |format|
-      if @lend.save
+      if !error && @lend.save
         format.html { redirect_to @lend, notice: "Lend was successfully created." }
         format.json { render :show, status: :created, location: @lend }
       else
