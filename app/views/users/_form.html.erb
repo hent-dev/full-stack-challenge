@@ -1,13 +1,13 @@
 <div class="mt-8 max-w-3xl mx-auto grid grid-cols-1 gap-6 sm:px-6 lg:max-w-7xl lg:grid-flow-col-dense lg:grid-cols-3">
   <div class="space-y-6 lg:col-start-1 lg:col-span-2">
 
-  <%= form_with(model: book) do |form| %>
-    <% if book.errors.any? %>
+  <%= form_with(model: user) do |form| %>
+    <% if user.errors.any? %>
       <div id="error_explanation">
-        <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+        <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
         <ul>
-          <% book.errors.each do |error| %>
+          <% user.errors.each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
         </ul>
@@ -25,10 +25,16 @@
               <%= form.text_field :name,  autocomplete: "given-name", class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
               </div>
             </div>
-            <%= form.label :author, class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+            <%= form.label :email, class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
               <div class="max-w-lg flex rounded-md shadow-sm">
-              <%= form.text_field :author,  autocomplete: "given-name", class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
+              <%= form.text_field :email, autocomplete: "given-name", class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
+              </div>
+            </div>
+            <%= form.label :password, class: "block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2" %>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+              <div class="max-w-lg flex rounded-md shadow-sm">
+              <%= form.text_field :password, class: "max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md" %>
               </div>
             </div>
           </div>

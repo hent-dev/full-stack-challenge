@@ -12,7 +12,7 @@ User.create_or_find_by(email: 'dev@hent.com.br') do |u|
 end
 
 20.times do
-  Book.create name: Faker::Book.title
+  Book.create name: Faker::Book.title 
 end
 
 Book.first(5).each do |book|
