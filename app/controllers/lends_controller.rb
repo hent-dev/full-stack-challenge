@@ -38,7 +38,7 @@ class LendsController < ApplicationController
 
     respond_to do |format|
       if !error && @lend.save
-        format.html { redirect_to @lend, notice: "Lend was successfully created." }
+        format.html { redirect_to @lend, notice: 'Lend was successfully created.' }
         format.json { render :show, status: :created, location: @lend }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -52,13 +52,13 @@ class LendsController < ApplicationController
 
     if User.find_by(email: lend_params[:user_email]).nil?
       error = true
-      @lend.errors[:base] << "Invalid email"
+      @lend.errors[:base] << 'Invalid email'
     else
       user = User.find_by!(email: lend_params[:user_email])
       @lend.user_id = user.id
       @lend.book_id = lend_params[:book_id]
 
-      if lend_params[:returned_bool] == "Yes"
+      if lend_params[:returned_bool] == 'Yes'
         @lend.devolution = Time.new
       else
         @lend.devolution = nil
@@ -67,7 +67,7 @@ class LendsController < ApplicationController
 
     respond_to do |format|
       if !error && @lend.save
-        format.html { redirect_to @lend, notice: "Lend was successfully updated." }
+        format.html { redirect_to @lend, notice: 'Lend was successfully updated.' }
         format.json { render :show, status: :ok, location: @lend }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -80,7 +80,7 @@ class LendsController < ApplicationController
   def destroy
     @lend.destroy
     respond_to do |format|
-      format.html { redirect_to lends_url, notice: "Lend was successfully destroyed." }
+      format.html { redirect_to lends_url, notice: 'Lend was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
